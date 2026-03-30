@@ -9,24 +9,24 @@
     <div class="d-flex align-items-center">
       <!-- Поиск по группам -->
       <form method="get" action="{% url 'posts:group_search' %}" class="d-flex me-3">
-        <input type="text" 
-               name="q" 
-               class="form-control form-control-sm me-2" 
-               placeholder="Поиск групп..." 
-               value="{{ search_query }}"
+        <input type="text" name="q" class="form-control form-control-sm me-2" 
+               placeholder="Поиск групп..." value="{{ search_query }}"
                style="width: 180px;">
         <button type="submit" class="btn btn-outline-primary btn-sm">
           <i class="bi bi-search"></i>
         </button>
       </form>
       
-      <!-- Кнопка "Все группы" для быстрого просмотра -->
+      <!-- Кнопка "Все группы" -->
       <a href="{% url 'posts:groups_list' %}" class="btn btn-outline-info btn-sm me-3">
         <i class="bi bi-people-fill"></i> Все группы
       </a>
       
-      <!-- Авторизация -->
+      <!-- Авторизация и создание поста -->
       {% if user.is_authenticated %}
+        <a href="{% url 'posts:post_create' %}" class="btn btn-success btn-sm me-3">
+          <i class="bi bi-plus-circle"></i> Новый пост
+        </a>
         <span class="navbar-text me-3">
           <span class="badge bg-success">{{ user.username }}</span>
         </span>

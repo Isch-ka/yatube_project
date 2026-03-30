@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if is_edit %}
+    Редактировать пост
+  {% else %}
+    Новый пост
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        {% if is_edit %}
+          Редактировать пост
+        {% else %}
+          Создать новый пост
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <form method="post" action="
+          {% if is_edit %}
+            {% url 'posts:post_edit' post_id %}
+          {% else %}
+            {% url 'posts:post_create' %}
+          {% endif %}
+        ">
+          {% csrf_token %}
+          
+          {% for field in form %}
+            <div class="form-group row my-3">
+              <label for="{{ field.id_for_label }}" class="form-label">
+                {{ field.label }}
+                {% if field.field.required %}
+                  <span class="required text-danger">*</span>
+                {% endif %}
+              </label>
+              {{ field }}
+              {% if field.help_text %}
+                <small class="form-text text-muted">
+                  {{ field.help_text }}
+                </small>
+              {% endif %}
+              {% if field.errors %}
+                <div class="alert alert-danger mt-2">
+                  {{ field.errors }}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          
+          <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'posts:index' %}" class="btn btn-secondary">
+              Отмена
+            </a>
+            <button type="submit" class="btn btn-primary">
+              {% if is_edit %}
+                Сохранить изменения
+              {% else %}
+                Опубликовать
+              {% endif %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

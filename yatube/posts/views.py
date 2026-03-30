@@ -1,4 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from .forms import PostForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post, Group
@@ -97,3 +100,47 @@ def group_search(request):
         'total_posts': Post.objects.count(),
     }
     return render(request, 'posts/groups_list.html', context)
+
+# Декоратор для создания поста
+def post_create(request):
+    """Страница создания нового поста (доступна только авторизованным)"""
+    form = PostForm(request.POST or None)
+    
+    if request.method == 'POST' and form.is_valid():
+        # Создаём пост, но пока не сохраняем в БД
+        post = form.save(commit=False)
+        # Присваиваем автору текущего пользователя
+        post.author = request.user
+        # Сохраняем пост в БД
+        post.save()
+        # Перенаправляем на главную страницу
+        return redirect('posts:index')
+    
+    context = {
+        'form': form,
+        'is_edit': False,  # Для различения создания и редактирования
+    }
+    return render(request, 'posts/post_form.html', context)
+
+
+@login_required
+def post_edit(request, post_id):
+    """Страница редактирования поста (только для автора)"""
+    post = get_object_or_404(Post, id=post_id)
+    
+    # Проверяем, что редактирует пост его автор
+    if post.author != request.user:
+        return redirect('posts:index')
+    
+    form = PostForm(request.POST or None, instance=post)
+    
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('posts:index')
+    
+    context = {
+        'form': form,
+        'is_edit': True,
+        'post_id': post_id,
+    }
+    return render(request, 'posts/post_form.html', context)
