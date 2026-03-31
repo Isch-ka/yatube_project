@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Пост {{ post.text|truncatechars:30 }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12 col-md-3">
+    <aside class="card">
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <i class="bi bi-calendar3 me-2"></i>
+            Дата публикации: {{ post.pub_date|date:"d E Y H:i" }}
+          </li>
+          
+          {% if post.group %}
+            <li class="list-group-item">
+              <i class="bi bi-people-fill me-2"></i>
+              Группа: {{ post.group.title }}
+              <a href="{% url 'posts:group_list' post.group.slug %}" class="ms-2">
+                все записи группы
+              </a>
+            </li>
+          {% endif %}
+          
+          <li class="list-group-item">
+            <i class="bi bi-person-circle me-2"></i>
+            Автор: {{ post.author.get_full_name|default:post.author.username }}
+          </li>
+          
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Всего постов автора:
+            <span class="badge bg-primary rounded-pill">{{ total_posts }}</span>
+          </li>
+          
+          <li class="list-group-item">
+            <a href="{% url 'posts:profile' post.author.username %}">
+              все посты пользователя
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  
+  <article class="col-12 col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Запись пользователя</h5>
+        <p class="card-text mt-3">{{ post.text }}</p>
+        
+        {% if user.is_authenticated and post.author == user %}
+          <div class="mt-4">
+            <a href="{% url 'posts:post_edit' post.id %}" class="btn btn-warning">
+              <i class="bi bi-pencil-square"></i> Редактировать пост
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}

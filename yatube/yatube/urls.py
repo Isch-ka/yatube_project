@@ -21,6 +21,7 @@ urlpatterns = [
     # Сначала проверяем в users, потом в auth
     path('auth/', include('users.urls')),
     path('auth/', include('django.contrib.auth.urls')),
+    path('about/', include('about.urls', namespace='about')),
     # импорт правил из приложения posts
     path('', include('posts.urls', namespace='posts')), # Добавлен namespace
 ]

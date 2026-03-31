@@ -4,8 +4,10 @@ from django.urls import reverse
 from .forms import PostForm
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth import get_user_model
 from .models import Post, Group
 
+User = get_user_model()
 
 def index(request):
     """Главная страница Yatube с поиском по постам"""
@@ -55,6 +57,7 @@ def group_posts(request, slug):
     }
     return render(request, 'posts/group_list.html', context)
 
+
 def groups_list(request):
     """Страница со списком всех групп"""
     groups = Group.objects.all().order_by('title')
@@ -101,6 +104,7 @@ def group_search(request):
     }
     return render(request, 'posts/groups_list.html', context)
 
+
 # Декоратор для создания поста
 def post_create(request):
     """Страница создания нового поста (доступна только авторизованным)"""
@@ -144,3 +148,56 @@ def post_edit(request, post_id):
         'post_id': post_id,
     }
     return render(request, 'posts/post_form.html', context)
+
+
+def profile(request, username):
+    """Профайл пользователя"""
+    author = get_object_or_404(User, username=username)
+    post_list = author.posts.select_related('group').order_by('-pub_date')
+    
+    paginator = Paginator(post_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'author': author,
+        'page_obj': page_obj,
+        'total_posts': post_list.count(),
+    }
+    return render(request, 'posts/profile.html', context)
+
+
+def post_detail(request, post_id):
+    """Страница отдельного поста"""
+    post = get_object_or_404(Post, id=post_id)
+    total_posts = post.author.posts.count()
+    
+    context = {
+        'post': post,
+        'total_posts': total_posts,
+    }
+    return render(request, 'posts/post_detail.html', context)
+
+
+def profile_search(request):
+    """Поиск пользователей по имени или username"""
+    query = request.GET.get('q', '')
+    users = User.objects.all()
+    
+    if query:
+        users = users.filter(
+            Q(username__icontains=query) | 
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query)
+        ).order_by('username')
+    
+    paginator = Paginator(users, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'query': query,
+        'total_users': users.count(),
+    }
+    return render(request, 'posts/profile_search.html', context)

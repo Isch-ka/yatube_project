@@ -28,6 +28,15 @@
     </header>
     <main>
       <div class="container py-5">
+        <!-- Кнопка "На главную" для всех страниц, кроме главной -->
+        {% if request.resolver_match.view_name != 'posts:index' %}
+          <div class="mb-4">
+            <a href="{% url 'posts:index' %}" class="btn btn-outline-primary">
+              <i class="bi bi-house-door"></i> На главную
+            </a>
+          </div>
+        {% endif %}
+        
         {% block content %}
           Контент не подвезли :(
         {% endblock %}
@@ -36,7 +45,5 @@
     <footer>
       {% include 'includes/footer.html' %}
     </footer>
-    <!-- Bootstrap JS для работы сворачивания/разворачивания -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

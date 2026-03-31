@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if query %}
+    Поиск пользователей: {{ query }} - Yatube
+  {% else %}
+    Поиск пользователей - Yatube
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <h1 class="mb-4">Поиск пользователей</h1>
+    
+    <!-- Форма поиска профилей -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">
+          <i class="bi bi-search"></i> 
+          Найдите пользователя по имени или логину
+        </h5>
+      </div>
+      <div class="card-body">
+        <form method="get" action="{% url 'posts:profile_search' %}" class="row g-3">
+          <div class="col-md-10">
+            <input type="text" name="q" class="form-control form-control-lg" 
+                   placeholder="Например: admin, Лев Толстой..." 
+                   value="{{ query }}">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-lg w-100">
+              <i class="bi bi-search"></i> Найти
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    {% if query %}
+      <div class="alert alert-info">
+        Найдено пользователей: {{ total_users }}
+      </div>
+    {% endif %}
+    
+    <!-- Список пользователей -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for user in page_obj %}
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-person-circle text-primary me-2"></i>
+                {{ user.get_full_name|default:user.username }}
+              </h5>
+              <p class="card-text text-muted">
+                <i class="bi bi-at"></i> @{{ user.username }}
+              </p>
+              <p class="card-text small">
+                <i class="bi bi-file-text-fill"></i> Постов: {{ user.posts.count }}
+              </p>
+              <a href="{% url 'posts:profile' user.username %}" class="btn btn-sm btn-primary">
+                Перейти в профиль <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        {% if query %}
+          <div class="col-12">
+            <div class="alert alert-warning">
+              По вашему запросу "{{ query }}" ничего не найдено.
+            </div>
+          </div>
+        {% else %}
+          <div class="col-12">
+            <div class="alert alert-info">
+              Введите имя или логин пользователя для поиска.
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    {% include 'includes/paginator.html' %}
+  </div>
+</div>
+{% endblock %}

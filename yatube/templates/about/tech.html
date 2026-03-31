@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Технологии{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <h1 class="mb-4">Технологии, использованные в проекте</h1>
+  </div>
+  
+  <!-- Боковой блок со списком технологий -->
+  <aside class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Стек технологий</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Python 3.9</strong> - основной язык программирования
+        </li>
+        <li class="list-group-item">
+          <strong>Django 4.2</strong> - веб-фреймворк
+        </li>
+        <li class="list-group-item">
+          <strong>SQLite</strong> - база данных
+        </li>
+        <li class="list-group-item">
+          <strong>Bootstrap 5</strong> - CSS-фреймворк
+        </li>
+        <li class="list-group-item">
+          <strong>HTML/CSS</strong> - вёрстка
+        </li>
+      </ul>
+    </div>
+  </aside>
+  
+  <!-- Статья -->
+  <article class="col-12 col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Как создавался проект</h5>
+        <p class="card-text">
+          Проект Yatube создавался пошагово, следуя лучшим практикам Django:
+        </p>
+        <ul>
+          <li>Создана структура проекта и настройки окружения</li>
+          <li>Разработаны модели Post и Group для хранения постов и сообществ</li>
+          <li>Реализованы view-функции и шаблоны для отображения контента</li>
+          <li>Добавлена пагинация для удобной навигации</li>
+          <li>Создана система регистрации и авторизации пользователей</li>
+          <li>Реализован поиск по постам с подсветкой результатов</li>
+          <li>Добавлены страницы профайлов пользователей и детального просмотра постов</li>
+          <li>А что было дальше, вы, скорее всего, не узнаете</li>
+        </ul>
+        
+        <h5 class="card-title mt-4">Что я освоил в ходе работы</h5>
+        <p class="card-text">
+          За время разработки я научился преодолевать лень, отвлекаясь на голод, и преодолевать голод, т.к. студентов в техникуме много :)
+        </p>
+        
+        <div class="alert alert-success mt-3">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          Проект продолжает развиваться (а разработчик - нет) !
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}
