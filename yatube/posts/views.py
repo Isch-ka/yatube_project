@@ -106,6 +106,7 @@ def group_search(request):
 
 
 # Декоратор для создания поста
+@login_required
 def post_create(request):
     """Страница создания нового поста (доступна только авторизованным)"""
     form = PostForm(request.POST or None)
@@ -117,8 +118,8 @@ def post_create(request):
         post.author = request.user
         # Сохраняем пост в БД
         post.save()
-        # Перенаправляем на главную страницу
-        return redirect('posts:index')
+        # Перенаправляем на страницу профайла пользователя
+        return redirect('posts:profile', username=request.user.username)
     
     context = {
         'form': form,
@@ -134,13 +135,14 @@ def post_edit(request, post_id):
     
     # Проверяем, что редактирует пост его автор
     if post.author != request.user:
-        return redirect('posts:index')
+        return redirect('posts:profile', username=request.user.username)
     
     form = PostForm(request.POST or None, instance=post)
     
     if request.method == 'POST' and form.is_valid():
         form.save()
-        return redirect('posts:index')
+        # После редактирования тоже перенаправляем на страницу профайла
+        return redirect('posts:profile', username=request.user.username)
     
     context = {
         'form': form,
