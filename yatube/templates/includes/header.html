@@ -1,30 +1,39 @@
 {% load static %}
 <nav class="navbar navbar-light" style="background-color: lightskyblue">
   <div class="container">
-    <a class="navbar-brand" href="{% url 'posts:index' %}">
-      <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-      <span style="color:red">Ya</span>tube
-    </a>
+    <div class="d-flex align-items-center">
+      <a class="navbar-brand" href="{% url 'posts:index' %}">
+        <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <span style="color:red">Ya</span>tube
+      </a>
+      
+      <!-- Кнопка "На главную" рядом с логотипом -->
+      <a href="{% url 'posts:index' %}" class="btn btn-outline-primary btn-sm ms-2">
+        <i class="bi bi-house-door"></i> На главную
+      </a>
+    </div>
     
     <div class="d-flex align-items-center">
       <!-- Поиск по группам -->
-      <form method="get" action="{% url 'posts:group_search' %}" class="d-flex me-2">
-        <input type="text" name="q" class="form-control form-control-sm" 
-               placeholder="Поиск групп..." value="{{ search_query }}"
-               style="width: 150px;">
-        <button type="submit" class="btn btn-outline-primary btn-sm ms-1">
-          <i class="bi bi-search"></i>
-        </button>
-      </form>
+      <div class="me-3">
+        <form method="get" action="{% url 'posts:group_search' %}" class="d-flex">
+          <input type="text" name="q" class="form-control form-control-sm" 
+                 placeholder="Поиск групп..." value="{{ search_query }}"
+                 style="width: 150px;">
+          <button type="submit" class="btn btn-primary btn-sm ms-1">
+            <i class="bi bi-search"></i> Найти
+          </button>
+        </form>
+      </div>
       
       <!-- Поиск по пользователям -->
-      <a href="{% url 'posts:profile_search' %}" class="btn btn-outline-info btn-sm me-3">
-        <i class="bi bi-person"></i> Найти пользователя
+      <a href="{% url 'posts:profile_search' %}" class="btn btn-success btn-sm">
+        <i class="bi bi-person-plus"></i> Найти пользователя
       </a>
     </div>
     
     {% with request.resolver_match.view_name as view_name %}
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills ms-3">
       <li class="nav-item">
         <a class="nav-link {% if view_name == 'about:author' %}active{% endif %}" 
            href="{% url 'about:author' %}">Об авторе</a>

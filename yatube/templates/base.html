@@ -28,15 +28,6 @@
     </header>
     <main>
       <div class="container py-5">
-        <!-- Кнопка "На главную" для всех страниц, кроме главной -->
-        {% if request.resolver_match.view_name != 'posts:index' %}
-          <div class="mb-4">
-            <a href="{% url 'posts:index' %}" class="btn btn-outline-primary">
-              <i class="bi bi-house-door"></i> На главную
-            </a>
-          </div>
-        {% endif %}
-        
         {% block content %}
           Контент не подвезли :(
         {% endblock %}

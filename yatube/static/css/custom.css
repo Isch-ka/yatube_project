@@ -57,10 +57,33 @@ article:hover {
     background-color: #ffc107;
 }
 
-/* Улучшаем читаемость текста в карточках */
+/* Стили для карточек постов */
 .card-text {
     line-height: 1.6;
     font-size: 1.1rem;
+}
+
+/* Стили для карточек пользователей */
+.card .bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.card .rounded-circle {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card .rounded-circle i {
+    font-size: 2rem;
+}
+
+/* Улучшаем внешний вид кнопок в хедере */
+.navbar .btn-sm {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
 }
 
 /* Стиль для контекста поиска */
@@ -72,4 +95,15 @@ article:hover {
     font-family: 'Courier New', monospace;
     white-space: pre-wrap;
     word-break: break-word;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .navbar .d-flex {
+        margin-bottom: 10px;
+    }
+    
+    .navbar .d-flex .me-3 {
+        margin-bottom: 5px;
+    }
 }

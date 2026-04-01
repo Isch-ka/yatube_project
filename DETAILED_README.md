@@ -1538,3 +1538,214 @@ class PostForm(forms.ModelForm):
 - Авторизованные пользователи могут создавать и редактировать свои посты
 - Неавторизованные пользователи при попытке создать пост перенаправляются на страницу входа
 - В хедере появилась кнопка "Новый пост" для авторизованных пользователей
+
+## 13. Валидация форм, статические страницы и новые страницы Yatube
+
+### 13.1. Валидация форм
+
+**Что такое валидация:**  
+Проверка данных, которые пользователь отправляет через формы. Django предоставляет встроенные механизмы валидации.
+
+**В нашем проекте валидация реализована через форму PostForm:**
+
+```python
+# posts/forms.py
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('text', 'group')
+        widgets = {
+            'text': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'group': forms.Select(attrs={'class': 'form-select'}),
+        }
+```
+
+**Встроенные валидаторы Django:**
+- Поле `text` автоматически проверяет, что текст не пустой (CharField по умолчанию required=True)
+- Поле `group` может быть пустым (blank=True, null=True в модели)
+- При создании поста автор автоматически подставляется из текущего пользователя
+
+### 13.2. Статические страницы (приложение about)
+
+**Создание приложения:**
+```bash
+python manage.py startapp about
+```
+
+**View-классы (about/views.py):**
+```python
+from django.views.generic.base import TemplateView
+
+class AboutAuthorView(TemplateView):
+    template_name = 'about/author.html'
+
+class AboutTechView(TemplateView):
+    template_name = 'about/tech.html'
+```
+
+**URL-маршруты (about/urls.py):**
+```python
+app_name = 'about'
+
+urlpatterns = [
+    path('author/', views.AboutAuthorView.as_view(), name='author'),
+    path('tech/', views.AboutTechView.as_view(), name='tech'),
+]
+```
+
+**Подключение в головном urls.py:**
+```python
+path('about/', include('about.urls', namespace='about')),
+```
+
+**Для чего это нужно:**  
+TemplateView автоматически обрабатывает GET-запросы и возвращает указанный шаблон. Не нужно писать view-функции для простых страниц.
+
+### 13.3. Страницы профайла пользователя
+
+**URL-маршрут (posts/urls.py):**
+```python
+path('profile/<str:username>/', views.profile, name='profile'),
+```
+
+**View-функция (posts/views.py):**
+```python
+def profile(request, username):
+    """Профайл пользователя"""
+    author = get_object_or_404(User, username=username)
+    post_list = author.posts.select_related('group').order_by('-pub_date')
+    paginator = Paginator(post_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'author': author,
+        'page_obj': page_obj,
+        'total_posts': post_list.count(),
+    }
+    return render(request, 'posts/profile.html', context)
+```
+
+**Шаблон profile.html** выводит:
+- Имя пользователя
+- Общее количество постов
+- Список постов пользователя с пагинацией
+- Ссылку на детальный просмотр каждого поста
+
+### 13.4. Страница отдельного поста
+
+**URL-маршрут:**
+```python
+path('posts/<int:post_id>/', views.post_detail, name='post_detail'),
+```
+
+**View-функция:**
+```python
+def post_detail(request, post_id):
+    """Страница отдельного поста"""
+    post = get_object_or_404(Post, id=post_id)
+    total_posts = post.author.posts.count()
+    
+    context = {
+        'post': post,
+        'total_posts': total_posts,
+    }
+    return render(request, 'posts/post_detail.html', context)
+```
+
+**Шаблон post_detail.html** выводит:
+- Полный текст поста
+- Информацию об авторе
+- Дату публикации
+- Группу (если есть)
+- Количество постов автора
+- Ссылку на профайл автора
+- Кнопку редактирования (только для автора)
+
+### 13.5. Поиск по пользователям
+
+**URL-маршрут (важно: должен быть выше profile/<str:username>/):**
+```python
+path('profile/search/', views.profile_search, name='profile_search'),
+```
+
+**View-функция:**
+```python
+def profile_search(request):
+    """Поиск пользователей по имени или username"""
+    query = request.GET.get('q', '')
+    users = User.objects.all()
+    
+    if query:
+        users = users.filter(
+            Q(username__icontains=query) | 
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query)
+        ).order_by('username')
+    
+    paginator = Paginator(users, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'query': query,
+        'total_users': users.count(),
+    }
+    return render(request, 'posts/profile_search.html', context)
+```
+
+**Для чего это нужно:**  
+Позволяет пользователям находить друг друга по имени, фамилии или логину без необходимости знать точный URL.
+
+### 13.6. Улучшения навигации
+
+**Хедер с явной кнопкой "На главную":**
+```html
+<div class="d-flex align-items-center">
+  <a class="navbar-brand" href="{% url 'posts:index' %}">
+    <img src="{% static 'img/logo.png' %}" width="30" height="30">
+    <span style="color:red">Ya</span>tube
+  </a>
+  
+  <a href="{% url 'posts:index' %}" class="btn btn-outline-primary btn-sm ms-2">
+    <i class="bi bi-house-door"></i> На главную
+  </a>
+</div>
+```
+
+**Подсветка активного пункта меню:**
+```html
+{% with request.resolver_match.view_name as view_name %}
+<li class="nav-item">
+  <a class="nav-link {% if view_name == 'about:author' %}active{% endif %}" 
+     href="{% url 'about:author' %}">Об авторе</a>
+</li>
+{% endwith %}
+```
+
+**Для чего это нужно:**  
+- Пользователь всегда видит явную кнопку возврата на главную
+- Активный пункт меню визуально выделен
+- Логотип также ведёт на главную (традиционное поведение)
+
+### 13.7. Итог по разделу
+
+**Что добавлено и улучшено:**
+- ✅ Форма создания поста с валидацией (PostForm)
+- ✅ Статические страницы "Об авторе" и "Технологии"
+- ✅ Страница профайла пользователя со списком постов
+- ✅ Страница детального просмотра отдельного поста
+- ✅ Поиск пользователей по имени, фамилии или логину
+- ✅ Явная кнопка "На главную" в хедере
+- ✅ Подсветка активного пункта меню
+- ✅ Убраны дублирующие кнопки навигации
+
+**Теперь пользователи могут:**
+- Создавать посты (только авторизованные)
+- Редактировать свои посты
+- Просматривать профили других пользователей
+- Искать пользователей по имени
+- Искать группы по названию
+- Просматривать детальную информацию о посте
+- Легко возвращаться на главную страницу
