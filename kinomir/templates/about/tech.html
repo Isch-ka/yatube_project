@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Технологии{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <h1 class="mb-4">Технологии, использованные в проекте «КиноМир»</h1>
+  </div>
+  
+  <!-- Боковой блок со списком технологий -->
+  <aside class="col-12 col-md-3">
+    <div class="card bg-dark">
+      <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">🎬 Стек технологий</h5>
+      </div>
+      <ul class="list-group list-group-flush bg-dark">
+        <li class="list-group-item bg-dark text-white-50">
+          <strong>Python 3.9</strong> — основной язык программирования
+        </li>
+        <li class="list-group-item bg-dark text-white-50">
+          <strong>Django 4.2</strong> — веб-фреймворк
+        </li>
+        <li class="list-group-item bg-dark text-white-50">
+          <strong>SQLite</strong> — база данных
+        </li>
+        <li class="list-group-item bg-dark text-white-50">
+          <strong>Bootstrap 5</strong> — CSS-фреймворк
+        </li>
+        <li class="list-group-item bg-dark text-white-50">
+          <strong>HTML/CSS</strong> — вёрстка
+        </li>
+      </ul>
+    </div>
+  </aside>
+  
+  <!-- Статья -->
+  <article class="col-12 col-md-9">
+    <div class="card bg-dark">
+      <div class="card-body">
+        <h5 class="card-title text-white">🎞️ Как создавался проект</h5>
+        <p class="card-text text-white-50">
+          Проект «КиноМир» создавался пошагово, следуя лучшим практикам Django:
+        </p>
+        <ul class="text-white-50">
+          <li>Создана структура проекта и настройки окружения</li>
+          <li>Разработаны модели Review и Genre для хранения рецензий и жанров</li>
+          <li>Реализованы view-функции и шаблоны для отображения контента</li>
+          <li>Добавлена пагинация для удобной навигации</li>
+          <li>Создана система регистрации и авторизации пользователей</li>
+          <li>Реализован поиск по фильмам и режиссёрам с подсветкой результатов</li>
+          <li>Добавлены страницы профайлов кинокритиков и детального просмотра рецензий</li>
+          <li>Добавлена модерация — только администратор может одобрять рецензии</li>
+          <li>А что было дальше, вы, скорее всего, не узнаете</li>
+        </ul>
+        
+        <h5 class="card-title mt-4 text-white">🍿 Что я освоил в ходе работы</h5>
+        <p class="card-text text-white-50">
+          За время разработки я научился преодолевать лень, отвлекаясь на просмотр фильмов, 
+          и преодолевать желание всё бросить и пойти в кино, т.к. студентов в техникуме много :)
+        </p>
+        
+        <div class="alert alert-danger mt-3">
+          <i class="bi bi-camera-reels-fill me-2"></i>
+          Проект продолжает развиваться (а разработчик — нет)!
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}

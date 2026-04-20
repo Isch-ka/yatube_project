@@ -1,0 +1,66 @@
+{% load static %}
+<nav class="navbar navbar-dark" style="background-color: #0a0a0a;">
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand" href="{% url 'reviews:index' %}">
+                <i class="bi bi-camera-reels-fill fs-3 me-2" style="color: #e50914;"></i>
+                <span style="color: #e50914;">КиноМир</span>
+            </a>
+            {% if request.resolver_match.view_name != 'reviews:index' %}
+                <a href="{% url 'reviews:index' %}" class="btn btn-outline-light btn-sm ms-2">
+                    <i class="bi bi-house-door"></i> На главную
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="d-flex align-items-center">
+            <form method="get" action="{% url 'reviews:genres_list' %}" class="d-flex me-2">
+                <input type="text" name="q" class="form-control form-control-sm" 
+                       placeholder="Поиск жанров..." style="width: 130px;">
+                <button type="submit" class="btn btn-danger btn-sm ms-1">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+            <div class="vr mx-2 bg-secondary"></div>
+
+            <a href="{% url 'reviews:profile_search' %}" class="btn btn-outline-danger btn-sm me-3">
+                <i class="bi bi-person-plus"></i> Найти критика
+            </a>
+
+            <div class="vr mx-2 bg-secondary"></div>
+
+            {% with request.resolver_match.view_name as view_name %}
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if view_name == 'about:author' %}active{% endif %}" 
+                       href="{% url 'about:author' %}">Об авторе</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if view_name == 'about:tech' %}active{% endif %}" 
+                       href="{% url 'about:tech' %}">Технологии</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white {% if view_name == 'reviews:review_create' %}active{% endif %}" 
+                           href="{% url 'reviews:review_create' %}">Новая рецензия</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'users:logout' %}">Выйти</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link text-danger">{{ user.username }}</span>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'users:login' %}">Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'users:signup' %}">Регистрация</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% endwith %}
+        </div>
+    </div>
+</nav>
