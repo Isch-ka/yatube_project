@@ -1,45 +1,42 @@
 {% extends "base.html" %}
 {% block title %}Об авторе проекта{% endblock %}
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <h1 class="mb-4">Ку, я автор проекта КиноМир!</h1>
-    
-    <div class="card mb-4">
-      <div class="card-body">
-        <h5 class="card-title">Немного обо мне</h5>
-        <p class="card-text">
-          Меня не зовут, я так прихожу. Я начинающий разработчик, который создаёт этот проект в рамках обучения :)
-        </p>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card bg-dark">
+      <div class="card-header bg-danger text-white">
+        <h3 class="mb-0"><i class="bi bi-person-circle"></i> Об авторе</h3>
       </div>
-    </div>
-    
-    <div class="card mb-4">
       <div class="card-body">
-        <h5 class="card-title">Мой путь в программирование</h5>
-        <p class="card-text">
-          У самурая нет цели, есть только путь (я искал короткий, но свернул не туда)
+        <p class="text-white-50">
+          <i class="bi bi-chat-quote text-danger"></i> Привет! Я создатель КиноМир — сообщества для настоящих киноманов.
         </p>
-      </div>
-    </div>
-    
-    <div class="card mb-4">
-      <div class="card-body">
-        <h5 class="card-title">Где найти мой след</h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <a href="https://github.com/Isch-ka" target="_blank">GitHub</a>
+        
+        <h5 class="text-white mt-4"><i class="bi bi-rocket-takeoff text-danger"></i> Как всё начиналось</h5>
+        <p class="text-white-50">
+          Я начинающий разработчик, который решил объединить любовь к кино и программированию. 
+          Так родился КиноМир — место, где можно делиться честными рецензиями на фильмы.
+        </p>
+        
+        <h5 class="text-white mt-4"><i class="bi bi-code-slash text-danger"></i> Технологии</h5>
+        <p class="text-white-50">
+          Проект построен на Django, использует Bootstrap для интерфейса и SQLite для хранения данных.
+        </p>
+        
+        <h5 class="text-white mt-4"><i class="bi bi-link-45deg text-danger"></i> Контакты</h5>
+        <ul class="list-group list-group-flush bg-dark">
+          <li class="list-group-item bg-dark text-white-50 border-secondary">
+            <i class="bi bi-github"></i> <a href="https://github.com/Isch-ka" target="_blank" class="text-danger">GitHub</a>
           </li>
-          <li class="list-group-item">
-            <a href="t.me/Isch_ka" target="_blank">Telegram</a>
+          <li class="list-group-item bg-dark text-white-50 border-secondary">
+            <i class="bi bi-telegram"></i> <a href="https://t.me/Isch_ka" target="_blank" class="text-danger">Telegram</a>
           </li>
         </ul>
+        
+        <div class="alert alert-danger mt-4">
+          <i class="bi bi-emoji-smile"></i> Люблю хорошее кино и качественный код!
+        </div>
       </div>
-    </div>
-    
-    <div class="alert alert-info">
-      <i class="bi bi-chat-dots-fill me-2"></i>
-      P.S. В создании этого проекта мне помогали мои верные друзья - сила воли, сила духа, усидчивость, терпение, лень, голод, юмор... Как правило, последние трое довольно часто выпихивали остальных.
     </div>
   </div>
 </div>

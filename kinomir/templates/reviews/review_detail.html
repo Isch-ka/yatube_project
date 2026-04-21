@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load review_extras %}
+
+{% block title %}{{ review.movie_title }} — рецензия от {{ review.author.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Хлебные крошки -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb bg-dark p-2 rounded">
+                    <li class="breadcrumb-item"><a href="{% url 'reviews:index' %}" class="text-danger">Главная</a></li>
+                    {% if review.genre %}
+                        <li class="breadcrumb-item"><a href="{% url 'reviews:genre_list' review.genre.slug %}" class="text-danger">{{ review.genre.name }}</a></li>
+                    {% endif %}
+                    <li class="breadcrumb-item active text-white-50" aria-current="page">{{ review.movie_title }}</li>
+                </ol>
+            </nav>
+
+            <!-- Карточка фильма -->
+            <div class="card bg-dark border-secondary mb-4">
+                <div class="card-header bg-danger text-white">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <h2 class="mb-0">{{ review.movie_title }}</h2>
+                        <span class="badge bg-warning text-dark fs-6 mt-2 mt-md-0">
+                            <i class="bi bi-star-fill"></i> {{ review.rating }}/10
+                        </span>
+                    </div>
+                    <h6 class="text-white-50 mt-2 mb-0">{{ review.director }} ({{ review.release_year }})</h6>
+                </div>
+                
+                <div class="card-body">
+                    <div class="mb-3">
+                        <span class="badge bg-danger me-2">
+                            <i class="bi bi-tag"></i> {{ review.genre.name|default:"Без жанра" }}
+                        </span>
+                        <span class="badge bg-secondary">
+                            <i class="bi bi-person-circle"></i> {{ review.author.username }}
+                        </span>
+                        <small class="text-muted ms-2">
+                            <i class="bi bi-calendar"></i> {{ review.pub_date|date:"d E Y H:i" }}
+                        </small>
+                    </div>
+
+                    <hr class="border-secondary">
+
+                    <h5 class="text-white"><i class="bi bi-chat-quote text-danger"></i> Рецензия</h5>
+                    <p class="card-text text-white-50" style="line-height: 1.8;">{{ review.text }}</p>
+
+                    {% if review.trailer_url %}
+                        <hr class="border-secondary">
+                        <div class="text-center">
+                            <a href="{{ review.trailer_url }}" target="_blank" class="btn btn-danger btn-lg">
+                                <i class="bi bi-play-btn-fill"></i> Смотреть трейлер
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <!-- Кнопки для автора и админа -->
+                    {% if user.is_authenticated and review.author == user or user.is_staff %}
+                        <hr class="border-secondary">
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'reviews:review_edit' review.id %}" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> Редактировать
+                            </a>
+                            {% if not review.is_approved and user.is_staff %}
+                                <a href="{% url 'reviews:review_moderate' review.id %}" class="btn btn-success">
+                                    <i class="bi bi-check-circle"></i> Одобрить
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {% if not review.is_approved %}
+                        <div class="alert alert-secondary mt-3 mb-0 bg-dark text-warning border-warning">
+                            <i class="bi bi-shield-shaded"></i> 
+                            Эта рецензия ожидает модерации. Она видна только вам и администраторам.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Информация об авторе -->
+            <div class="card bg-dark border-secondary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <i class="bi bi-person-badge fs-4 text-danger"></i>
+                            <strong class="text-white ms-2">{{ review.author.username }}</strong>
+                            <span class="text-muted ms-2">всего рецензий: {{ total_reviews }}</span>
+                        </div>
+                        <a href="{% url 'reviews:profile' review.author.username %}" class="btn btn-outline-danger btn-sm mt-2 mt-md-0">
+                            <i class="bi bi-box-arrow-right"></i> Все рецензии автора
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,49 +1,68 @@
 {% extends "base.html" %}
-{% block title %}Зарегистрироваться{% endblock %}
+{% block title %}Регистрация{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-8 p-5">
-    <div class="card">
-      <div class="card-header">
-        Зарегистрироваться
+  <div class="col-md-6">
+    <div class="card bg-dark">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0"><i class="bi bi-person-plus"></i> Регистрация в КиноМир</h4>
       </div>
       <div class="card-body">
         {% if form.errors %}
           {% for field in form %}
             {% for error in field.errors %}
-              <div class="alert alert-danger">
-                {{ error|escape }}
-              </div>
+              <div class="alert alert-danger">{{ error|escape }}</div>
             {% endfor %}
           {% endfor %}
           {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-              {{ error|escape }}
-            </div>
+            <div class="alert alert-danger">{{ error|escape }}</div>
           {% endfor %}
         {% endif %}
 
         <form method="post" action="{% url 'users:signup' %}">
           {% csrf_token %}
-          {% for field in form %}
-          <div class="form-group row my-3 p-3">
-            <label for="{{ field.id_for_label }}">
-              {{ field.label }}
-              {% if field.field.required %}
-                <span class="required text-danger">*</span>
-              {% endif %}
-            </label>
-            {{ field }}
-            {% if field.help_text %}
-              <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
-                {{ field.help_text|safe }}
-              </small>
-            {% endif %}
+          
+          <div class="mb-3">
+            <label for="id_first_name" class="form-label text-white">Имя</label>
+            <input type="text" name="first_name" class="form-control" id="id_first_name">
           </div>
-          {% endfor %}
-          <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary">
-              Зарегистрироваться
+          
+          <div class="mb-3">
+            <label for="id_last_name" class="form-label text-white">Фамилия</label>
+            <input type="text" name="last_name" class="form-control" id="id_last_name">
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_username" class="form-label text-white">
+              <i class="bi bi-at"></i> Имя пользователя <span class="text-danger">*</span>
+            </label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+            <small class="form-text text-muted">Обязательное поле. Не более 150 символов.</small>
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_email" class="form-label text-white"><i class="bi bi-envelope"></i> Email</label>
+            <input type="email" name="email" class="form-control" id="id_email">
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_password1" class="form-label text-white">
+              <i class="bi bi-lock"></i> Пароль <span class="text-danger">*</span>
+            </label>
+            <input type="password" name="password1" class="form-control" id="id_password1" required>
+            <small class="form-text text-muted">Пароль должен содержать минимум 8 символов.</small>
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_password2" class="form-label text-white">
+              <i class="bi bi-lock-fill"></i> Подтверждение пароля <span class="text-danger">*</span>
+            </label>
+            <input type="password" name="password2" class="form-control" id="id_password2" required>
+          </div>
+          
+          <div class="d-grid">
+            <button type="submit" class="btn btn-danger btn-lg">
+              <i class="bi bi-check-circle"></i> Зарегистрироваться
             </button>
           </div>
         </form>

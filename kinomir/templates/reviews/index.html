@@ -1,12 +1,110 @@
 {% extends 'base.html' %}
+{% load review_extras %}
 
-{% block title %}КиноМир - рецензии на фильмы{% endblock %}
+{% block title %}КиноМир — рецензии на фильмы{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h1 class="text-center mb-4">Добро пожаловать в КиноМир!</h1>
-        <p class="text-center text-muted">Страница в разработке. Скоро здесь появятся рецензии на фильмы.</p>
+<div class="container px-0">
+    <!-- Hero section -->
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-bold text-white">🎬 КиноМир</h1>
+        <p class="lead text-muted">Честные рецензии на фильмы от настоящих кинокритиков</p>
     </div>
+
+    <!-- Поиск -->
+    <div class="card bg-dark mb-4 border-secondary">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="bi bi-search"></i> Поиск фильмов</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-10">
+                    <input type="text" name="q" class="form-control form-control-lg bg-dark text-white border-secondary" 
+                           placeholder="Название фильма, режиссёр или ключевое слово..." 
+                           value="{{ query }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-danger btn-lg w-100">
+                        <i class="bi bi-search"></i> Найти
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if query %}
+        <div class="alert alert-info bg-dark text-info border-info">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            Найдено рецензий: {{ page_obj.paginator.count }}
+        </div>
+    {% endif %}
+
+    <!-- Список рецензий -->
+    {% for review in page_obj %}
+        <div class="card bg-dark mb-4 border-secondary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <div class="mb-2 mb-md-0">
+                        <h3 class="card-title text-white">
+                            <i class="bi bi-film text-danger"></i> {{ review.movie_title }}
+                        </h3>
+                        <h6 class="text-muted">
+                            <i class="bi bi-person-video3"></i> {{ review.director }} · 
+                            <i class="bi bi-calendar"></i> {{ review.release_year }}
+                        </h6>
+                    </div>
+                    <div>
+                        <span class="badge bg-warning text-dark fs-6">
+                            <i class="bi bi-star-fill"></i> {{ review.rating }}/10
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-3 mb-3">
+                    <span class="badge bg-danger me-2">
+                        <i class="bi bi-tag"></i> {{ review.genre.name|default:"Без жанра" }}
+                    </span>
+                    <span class="badge bg-secondary">
+                        <i class="bi bi-person-circle"></i> {{ review.author.username }}
+                    </span>
+                    <small class="text-muted ms-2">
+                        <i class="bi bi-clock"></i> {{ review.pub_date|date:"d E Y" }}
+                    </small>
+                </div>
+
+                <p class="card-text text-white-50">
+                    {% if query %}
+                        {{ review.text|highlight:query|truncatechars:350 }}
+                    {% else %}
+                        {{ review.text|truncatechars:350 }}
+                    {% endif %}
+                </p>
+
+                <div class="mt-3">
+                    <a href="{% url 'reviews:review_detail' review.id %}" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-eye"></i> Читать рецензию
+                    </a>
+                    {% if review.trailer_url %}
+                        <a href="{{ review.trailer_url }}" target="_blank" class="btn btn-outline-info btn-sm ms-2">
+                            <i class="bi bi-play-btn"></i> Смотреть трейлер
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-secondary text-center bg-dark border-secondary">
+            <i class="bi bi-camera-reels fs-1"></i>
+            <p class="mt-3 mb-0">Пока нет ни одной рецензии. Будь первым критиком!</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'reviews:review_create' %}" class="btn btn-danger mt-3">Написать рецензию</a>
+            {% else %}
+                <a href="{% url 'users:login' %}" class="btn btn-danger mt-3">Войдите, чтобы написать рецензию</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- Пагинация -->
+    {% include 'includes/paginator.html' %}
 </div>
 {% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Поиск кинокритиков — КиноМир{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-white mb-4">🔍 Поиск кинокритиков</h1>
+
+    <!-- Форма поиска -->
+    <div class="card bg-dark border-secondary mb-4">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="bi bi-person-search"></i> Найдите пользователя</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-10">
+                    <input type="text" name="q" class="form-control form-control-lg bg-dark text-white border-secondary" 
+                           placeholder="Имя, фамилия или логин..." value="{{ query }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-danger btn-lg w-100">
+                        <i class="bi bi-search"></i> Найти
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if query %}
+        <div class="alert alert-info bg-dark text-info border-info mb-4">
+            Найдено пользователей: {{ total_users }}
+        </div>
+    {% endif %}
+
+    <!-- Список пользователей -->
+    <div class="row g-4">
+        {% for user in page_obj %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card bg-dark border-secondary h-100 text-center">
+                    <div class="card-body">
+                        <div class="bg-danger rounded-circle mx-auto d-flex align-items-center justify-content-center" 
+                             style="width: 80px; height: 80px;">
+                            <i class="bi bi-person-circle fs-1 text-white"></i>
+                        </div>
+                        <h5 class="card-title text-white mt-3">{{ user.get_full_name|default:user.username }}</h5>
+                        <p class="text-muted mb-2">@{{ user.username }}</p>
+                        <p class="text-white-50 mb-3">
+                            <i class="bi bi-film"></i> Рецензий: {{ user.reviews.count }}
+                        </p>
+                        <a href="{% url 'reviews:profile' user.username %}" class="btn btn-outline-danger btn-sm">
+                            Перейти в профиль →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-secondary text-center bg-dark border-secondary">
+                    <i class="bi bi-person-x fs-1"></i>
+                    <p class="mt-2 mb-0">
+                        {% if query %}
+                            По запросу "{{ query }}" ничего не найдено.
+                        {% else %}
+                            Введите имя или логин для поиска.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include 'includes/paginator.html' %}
+</div>
+{% endblock %}

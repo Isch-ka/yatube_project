@@ -1,7 +1,74 @@
 {% extends 'base.html' %}
-{% block title %}{{ genre.name }}{% endblock %}
+{% load review_extras %}
+
+{% block title %}{{ genre.name }} — рецензии{% endblock %}
+
 {% block content %}
-<h1>{{ genre.name }}</h1>
-<p>{{ genre.description }}</p>
-<p>Страница в разработке</p>
+<div class="container">
+    <!-- Хлебные крошки -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-dark p-2 rounded">
+            <li class="breadcrumb-item"><a href="{% url 'reviews:index' %}" class="text-danger">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'reviews:genres_list' %}" class="text-danger">Жанры</a></li>
+            <li class="breadcrumb-item active text-white-50" aria-current="page">{{ genre.name }}</li>
+        </ol>
+    </nav>
+
+    <!-- Информация о жанре -->
+    <div class="card bg-dark border-secondary mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-collection-play fs-1 text-danger me-3"></i>
+                <div>
+                    <h1 class="text-white mb-0">{{ genre.name }}</h1>
+                    <p class="text-muted mb-0">{{ genre.description }}</p>
+                    <p class="text-white-50 mt-2 mb-0">
+                        <i class="bi bi-film"></i> Всего рецензий: {{ total_reviews }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список рецензий -->
+    {% for review in page_obj %}
+        <div class="card bg-dark mb-3 border-secondary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <div>
+                        <h5 class="text-white">
+                            <i class="bi bi-film text-danger"></i> {{ review.movie_title }}
+                        </h5>
+                        <h6 class="text-muted">{{ review.director }} ({{ review.release_year }})</h6>
+                    </div>
+                    <span class="badge bg-warning text-dark">
+                        <i class="bi bi-star-fill"></i> {{ review.rating }}/10
+                    </span>
+                </div>
+
+                <p class="text-white-50 mt-2">{{ review.text|truncatechars:250 }}</p>
+
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <small class="text-muted">
+                        <i class="bi bi-person-circle"></i> {{ review.author.username }}
+                        <i class="bi bi-calendar ms-2"></i> {{ review.pub_date|date:"d E Y" }}
+                    </small>
+                    <a href="{% url 'reviews:review_detail' review.id %}" class="btn btn-sm btn-outline-danger">
+                        Читать →
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-secondary text-center bg-dark border-secondary">
+            <i class="bi bi-inbox fs-1"></i>
+            <p class="mt-2 mb-0">В этом жанре пока нет рецензий.</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'reviews:review_create' %}" class="btn btn-danger mt-3">Написать рецензию</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% include 'includes/paginator.html' %}
+</div>
 {% endblock %}

@@ -2,46 +2,42 @@
 {% block title %}Войти{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-8 p-5">
-    <div class="card">
-      <div class="card-header">
-        Войти на сайт
+  <div class="col-md-6">
+    <div class="card bg-dark">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0"><i class="bi bi-box-arrow-in-right"></i> Вход в КиноМир</h4>
       </div>
       <div class="card-body">
         {% if form.errors %}
-          {% for field in form %}
-            {% for error in field.errors %}
-              <div class="alert alert-danger">
-                {{ error|escape }}
-              </div>
-            {% endfor %}
-          {% endfor %}
-          {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-              {{ error|escape }}
-            </div>
-          {% endfor %}
+          <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Неправильное имя пользователя или пароль.
+          </div>
         {% endif %}
 
         <form method="post" action="{% url 'users:login' %}">
           {% csrf_token %}
-          {% for field in form %}
-          <div class="form-group row my-3 p-3">
-            <label for="{{ field.id_for_label }}">
-              {{ field.label }}
-              {% if field.field.required %}
-                <span class="required text-danger">*</span>
-              {% endif %}
+          
+          <div class="mb-3">
+            <label for="id_username" class="form-label text-white">
+              <i class="bi bi-person"></i> Имя пользователя
             </label>
-            {{ field }}
+            <input type="text" name="username" class="form-control" id="id_username" required>
           </div>
-          {% endfor %}
-          <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary">
-              Войти
+          
+          <div class="mb-4">
+            <label for="id_password" class="form-label text-white">
+              <i class="bi bi-lock"></i> Пароль
+            </label>
+            <input type="password" name="password" class="form-control" id="id_password" required>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-danger btn-lg">
+              <i class="bi bi-box-arrow-in-right"></i> Войти
             </button>
-            <a href="{% url 'password_reset' %}" class="btn btn-link">
-              Забыли пароль?
+            <a href="{% url 'password_reset' %}" class="btn btn-outline-secondary">
+              <i class="bi bi-question-circle"></i> Забыли пароль?
             </a>
           </div>
         </form>
