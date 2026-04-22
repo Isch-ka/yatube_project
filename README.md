@@ -1,6 +1,6 @@
-# КиноМир
+# КиноМир — сообщество кинокритиков
 
-КиноМир - сообщество киноманов
+Платформа для публикации рецензий на фильмы. Пользователи могут делиться мнениями, оценивать фильмы и объединять рецензии по жанрам.
 
 ## Быстрый старт
 
@@ -8,49 +8,51 @@
 - Python 3.9+
 - Git
 
-### Установка и запуск
+### Установка и запуск (автоматический)
 
-1. **Клонировать репозиторий**
-   ```bash
-   git clone <url-вашего-репозитория>
-   cd yatube_project
-   ```
+```bash
+# 1. Клонировать репозиторий
+git clone <url-репозитория>
+cd kinomir_project/kinomir
 
-2. **Создать и активировать виртуальное окружение**
-   ```bash
-   python -m venv venv
-   source venv/Scripts/activate  # для Windows (Git Bash)
-   # или
-   source venv/bin/activate      # для Linux/Mac
-   ```
+# 2. Запустить скрипт развёртывания
+# Windows (Git Bash):
+./run_windows.sh
+# Linux/Mac:
+./run_linux.sh
+```
 
-3. **Установить зависимости**
-   ```bash
-   pip install -r requirements.txt
+Скрипт сам создаст окружение, установит зависимости, выполнит миграции, загрузит тестовые данные и запустит сервер.
 
-   # Установка зависимостей через зеркало:
-   pip install -r requirements.txt -i https://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com --timeout 100
-   ```
+### Установка и запуск (ручной)
 
-4. **Выполнить миграции**
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+```bash
+# 1. Клонировать репозиторий
+git clone <url-репозитория>
+cd kinomir_project/kinomir
 
-5. **Создать суперпользователя (для доступа в админку)**
-   ```bash
-   python manage.py createsuperuser
-   ```
+# 2. Создать и активировать виртуальное окружение
+python -m venv venv
+source venv/Scripts/activate  # Windows (Git Bash)
+source venv/bin/activate      # Linux/Mac
 
-6. **Запустить сервер разработки**
-   ```bash
-   python manage.py runserver
-   ```
+# 3. Установить зависимости
+pip install -r requirements.txt
 
-7. **Открыть в браузере**
-   - Сайт: http://127.0.0.1:8000/
-   - Админка: http://127.0.0.1:8000/admin/
+# 4. Выполнить миграции
+python manage.py migrate
+
+# 5. Загрузить тестовые данные
+python manage.py loaddata fixtures/kinomir_data.json
+
+# 6. Создать суперпользователя
+python manage.py createsuperuser
+
+# 7. Запустить сервер
+python manage.py runserver
+```
+
+После запуска сайт доступен по адресу: http://127.0.0.1:8000/
 
 ## Основные команды
 
@@ -60,24 +62,15 @@
 | `python manage.py makemigrations` | Создание миграций |
 | `python manage.py migrate` | Применение миграций |
 | `python manage.py createsuperuser` | Создание админа |
-| `python manage.py startapp <имя>` | Создание нового приложения |
+| `python manage.py loaddata fixtures/kinomir_data.json` | Загрузка тестовых данных |
+| `python manage.py dumpdata --indent 2 > fixtures/kinomir_data.json` | Сохранение новых данных в фикстуру |
 
 ## Запуск тестов
 
 ```bash
-# Запуск всех тестов
-python manage.py test
-
-# Запуск тестов приложения reviews
-python manage.py test reviews
-
-# Запуск с подробным выводом
-python manage.py test -v 2
-
-# Запуск конкретного тестового файла
-python manage.py test reviews.tests.test_models
-python manage.py test reviews.tests.test_forms
-python manage.py test reviews.tests.test_views
+python manage.py test                    # Все тесты
+python manage.py test reviews            # Тесты приложения reviews
+python manage.py test -v 2               # Подробный вывод
 ```
 
 ## Структура проекта
@@ -91,6 +84,7 @@ kinomir_project/
 │   ├── about/            # Статические страницы
 │   ├── static/           # CSS, изображения
 │   ├── templates/        # HTML шаблоны
+│   ├── fixtures/         # Дамп тестовых данных
 │   └── kinomir/          # Настройки проекта
 ├── manage.py
 └── requirements.txt
