@@ -38,18 +38,6 @@ source venv/bin/activate      # Linux/Mac
 
 # 3. Установить зависимости
 pip install -r requirements.txt
-
-# 4. Выполнить миграции
-python manage.py migrate
-
-# 5. Загрузить тестовые данные
-python manage.py loaddata fixtures/kinomir_data.json
-
-# 6. Создать суперпользователя
-python manage.py createsuperuser
-
-# 7. Запустить сервер
-python manage.py runserver
 ```
 
 После запуска сайт доступен по адресу: http://127.0.0.1:8000/
@@ -63,7 +51,7 @@ python manage.py runserver
 | `python manage.py migrate` | Применение миграций |
 | `python manage.py createsuperuser` | Создание админа |
 | `python manage.py loaddata fixtures/kinomir_data.json` | Загрузка тестовых данных |
-| `python manage.py dumpdata --indent 2 > fixtures/kinomir_data.json` | Сохранение новых данных в фикстуру |
+| `python save_fixture.py` | Сохранение новых данных в фикстуру (без ошибок кодировки) |
 
 ## Запуск тестов
 
@@ -85,9 +73,13 @@ kinomir_project/
 │   ├── static/           # CSS, изображения
 │   ├── templates/        # HTML шаблоны
 │   ├── fixtures/         # Дамп тестовых данных
+│   │   └── kinomir_data.json
 │   └── kinomir/          # Настройки проекта
 ├── manage.py
-└── requirements.txt
+├── save_fixture.py       # Скрипт сохранения данных в фикстуру
+├── run_windows.sh        # Скрипт запуска для Windows
+├── run_linux.sh          # Скрипт запуска для Linux/Mac
+└── requirements.txt      # Зависимости  
 ```
 
 ## Лицензия

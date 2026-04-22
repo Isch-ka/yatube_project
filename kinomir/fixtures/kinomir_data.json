@@ -1,383 +1,14 @@
 [
 {
-  "model": "reviews.genre",
-  "pk": 1,
-  "fields": {
-    "name": "Боевик",
-    "slug": "action",
-    "description": "Напряжённые сцены, погони, перестрелки и драки. Держит в напряжении от начала до конца."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 2,
-  "fields": {
-    "name": "Комедия",
-    "slug": "comedy",
-    "description": "Лёгкие, смешные фильмы для поднятия настроения и хорошего времяпрепровождения."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 3,
-  "fields": {
-    "name": "Драма",
-    "slug": "drama",
-    "description": "Глубокие, эмоциональные истории, заставляющие задуматься о жизни."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 4,
-  "fields": {
-    "name": "Фантастика",
-    "slug": "sci-fi",
-    "description": "Космос, роботы, путешествия во времени и невероятные технологии."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 5,
-  "fields": {
-    "name": "Ужасы",
-    "slug": "horror",
-    "description": "Страшные истории, мистика и атмосфера, от которой мурашки по коже."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 6,
-  "fields": {
-    "name": "Триллер",
-    "slug": "thriller",
-    "description": "Загадочные сюжеты с неожиданными поворотами и психологическим напряжением."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 7,
-  "fields": {
-    "name": "Мелодрама",
-    "slug": "melodrama",
-    "description": "Романтические истории о любви, чувствах и отношениях."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 8,
-  "fields": {
-    "name": "Криминал",
-    "slug": "crime",
-    "description": "Гангстерские разборки, детективные расследования и преступный мир."
-  }
-},
-{
-  "model": "reviews.genre",
-  "pk": 9,
-  "fields": {
-    "name": "Приключения",
-    "slug": "adventure",
-    "description": "Путешествия, поиск сокровищ и невероятные открытия."
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 1,
-  "fields": {
-    "name": "Can add Жанр",
-    "content_type": 1,
-    "codename": "add_genre"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 2,
-  "fields": {
-    "name": "Can change Жанр",
-    "content_type": 1,
-    "codename": "change_genre"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 3,
-  "fields": {
-    "name": "Can delete Жанр",
-    "content_type": 1,
-    "codename": "delete_genre"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 4,
-  "fields": {
-    "name": "Can view Жанр",
-    "content_type": 1,
-    "codename": "view_genre"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 5,
-  "fields": {
-    "name": "Can add Рецензия",
-    "content_type": 2,
-    "codename": "add_review"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 6,
-  "fields": {
-    "name": "Can change Рецензия",
-    "content_type": 2,
-    "codename": "change_review"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 7,
-  "fields": {
-    "name": "Can delete Рецензия",
-    "content_type": 2,
-    "codename": "delete_review"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 8,
-  "fields": {
-    "name": "Can view Рецензия",
-    "content_type": 2,
-    "codename": "view_review"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 9,
-  "fields": {
-    "name": "Can add log entry",
-    "content_type": 3,
-    "codename": "add_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 10,
-  "fields": {
-    "name": "Can change log entry",
-    "content_type": 3,
-    "codename": "change_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 11,
-  "fields": {
-    "name": "Can delete log entry",
-    "content_type": 3,
-    "codename": "delete_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 12,
-  "fields": {
-    "name": "Can view log entry",
-    "content_type": 3,
-    "codename": "view_logentry"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 13,
-  "fields": {
-    "name": "Can add permission",
-    "content_type": 4,
-    "codename": "add_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 14,
-  "fields": {
-    "name": "Can change permission",
-    "content_type": 4,
-    "codename": "change_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 15,
-  "fields": {
-    "name": "Can delete permission",
-    "content_type": 4,
-    "codename": "delete_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 16,
-  "fields": {
-    "name": "Can view permission",
-    "content_type": 4,
-    "codename": "view_permission"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 17,
-  "fields": {
-    "name": "Can add group",
-    "content_type": 5,
-    "codename": "add_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 18,
-  "fields": {
-    "name": "Can change group",
-    "content_type": 5,
-    "codename": "change_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 19,
-  "fields": {
-    "name": "Can delete group",
-    "content_type": 5,
-    "codename": "delete_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 20,
-  "fields": {
-    "name": "Can view group",
-    "content_type": 5,
-    "codename": "view_group"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 21,
-  "fields": {
-    "name": "Can add user",
-    "content_type": 6,
-    "codename": "add_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 22,
-  "fields": {
-    "name": "Can change user",
-    "content_type": 6,
-    "codename": "change_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 23,
-  "fields": {
-    "name": "Can delete user",
-    "content_type": 6,
-    "codename": "delete_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 24,
-  "fields": {
-    "name": "Can view user",
-    "content_type": 6,
-    "codename": "view_user"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 25,
-  "fields": {
-    "name": "Can add content type",
-    "content_type": 7,
-    "codename": "add_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 26,
-  "fields": {
-    "name": "Can change content type",
-    "content_type": 7,
-    "codename": "change_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 27,
-  "fields": {
-    "name": "Can delete content type",
-    "content_type": 7,
-    "codename": "delete_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 28,
-  "fields": {
-    "name": "Can view content type",
-    "content_type": 7,
-    "codename": "view_contenttype"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 29,
-  "fields": {
-    "name": "Can add session",
-    "content_type": 8,
-    "codename": "add_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 30,
-  "fields": {
-    "name": "Can change session",
-    "content_type": 8,
-    "codename": "change_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 31,
-  "fields": {
-    "name": "Can delete session",
-    "content_type": 8,
-    "codename": "delete_session"
-  }
-},
-{
-  "model": "auth.permission",
-  "pk": 32,
-  "fields": {
-    "name": "Can view session",
-    "content_type": 8,
-    "codename": "view_session"
-  }
-},
-{
   "model": "auth.user",
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$600000$hUjl2J1hTUgUiiAMhBNo69$NjBQlfy/M/9jAD8ls3jRcp09udDLqdz43MigKnKn9wk=",
-    "last_login": null,
+    "last_login": "2026-04-22T19:20:28.933Z",
     "is_superuser": false,
     "username": "alex_movie",
-    "first_name": "Алексей",
-    "last_name": "Смирнов",
+    "first_name": "РђР»РµРєСЃРµР№",
+    "last_name": "РЎРјРёСЂРЅРѕРІ",
     "email": "alex@kinomir.ru",
     "is_staff": false,
     "is_active": true,
@@ -394,8 +25,8 @@
     "last_login": null,
     "is_superuser": false,
     "username": "katy_film",
-    "first_name": "Екатерина",
-    "last_name": "Волкова",
+    "first_name": "Р•РєР°С‚РµСЂРёРЅР°",
+    "last_name": "Р’РѕР»РєРѕРІР°",
     "email": "katy@kinomir.ru",
     "is_staff": false,
     "is_active": true,
@@ -412,8 +43,8 @@
     "last_login": null,
     "is_superuser": false,
     "username": "dima_critic",
-    "first_name": "Дмитрий",
-    "last_name": "Морозов",
+    "first_name": "Р”РјРёС‚СЂРёР№",
+    "last_name": "РњРѕСЂРѕР·РѕРІ",
     "email": "dima@kinomir.ru",
     "is_staff": false,
     "is_active": true,
@@ -430,8 +61,8 @@
     "last_login": null,
     "is_superuser": false,
     "username": "cinema_lover",
-    "first_name": "Анна",
-    "last_name": "Кузнецова",
+    "first_name": "РђРЅРЅР°",
+    "last_name": "РљСѓР·РЅРµС†РѕРІР°",
     "email": "anna@kinomir.ru",
     "is_staff": false,
     "is_active": true,
@@ -441,67 +72,100 @@
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 1,
   "fields": {
-    "app_label": "reviews",
-    "model": "genre"
+    "name": "Р‘РѕРµРІРёРє",
+    "slug": "action",
+    "description": "РќР°РїСЂСЏР¶С‘РЅРЅС‹Рµ СЃС†РµРЅС‹, РїРѕРіРѕРЅРё, РїРµСЂРµСЃС‚СЂРµР»РєРё Рё РґСЂР°РєРё. Р”РµСЂР¶РёС‚ РІ РЅР°РїСЂСЏР¶РµРЅРёРё РѕС‚ РЅР°С‡Р°Р»Р° РґРѕ РєРѕРЅС†Р°."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 2,
   "fields": {
-    "app_label": "reviews",
-    "model": "review"
+    "name": "РљРѕРјРµРґРёСЏ",
+    "slug": "comedy",
+    "description": "Р›С‘РіРєРёРµ, СЃРјРµС€РЅС‹Рµ С„РёР»СЊРјС‹ РґР»СЏ РїРѕРґРЅСЏС‚РёСЏ РЅР°СЃС‚СЂРѕРµРЅРёСЏ Рё С…РѕСЂРѕС€РµРіРѕ РІСЂРµРјСЏРїСЂРµРїСЂРѕРІРѕР¶РґРµРЅРёСЏ."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 3,
   "fields": {
-    "app_label": "admin",
-    "model": "logentry"
+    "name": "Р”СЂР°РјР°",
+    "slug": "drama",
+    "description": "Р“Р»СѓР±РѕРєРёРµ, СЌРјРѕС†РёРѕРЅР°Р»СЊРЅС‹Рµ РёСЃС‚РѕСЂРёРё, Р·Р°СЃС‚Р°РІР»СЏСЋС‰РёРµ Р·Р°РґСѓРјР°С‚СЊСЃСЏ Рѕ Р¶РёР·РЅРё."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 4,
   "fields": {
-    "app_label": "auth",
-    "model": "permission"
+    "name": "Р¤Р°РЅС‚Р°СЃС‚РёРєР°",
+    "slug": "sci-fi",
+    "description": "РљРѕСЃРјРѕСЃ, СЂРѕР±РѕС‚С‹, РїСѓС‚РµС€РµСЃС‚РІРёСЏ РІРѕ РІСЂРµРјРµРЅРё Рё РЅРµРІРµСЂРѕСЏС‚РЅС‹Рµ С‚РµС…РЅРѕР»РѕРіРёРё."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 5,
   "fields": {
-    "app_label": "auth",
-    "model": "group"
+    "name": "РЈР¶Р°СЃС‹",
+    "slug": "horror",
+    "description": "РЎС‚СЂР°С€РЅС‹Рµ РёСЃС‚РѕСЂРёРё, РјРёСЃС‚РёРєР° Рё Р°С‚РјРѕСЃС„РµСЂР°, РѕС‚ РєРѕС‚РѕСЂРѕР№ РјСѓСЂР°С€РєРё РїРѕ РєРѕР¶Рµ."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 6,
   "fields": {
-    "app_label": "auth",
-    "model": "user"
+    "name": "РўСЂРёР»Р»РµСЂ",
+    "slug": "thriller",
+    "description": "Р—Р°РіР°РґРѕС‡РЅС‹Рµ СЃСЋР¶РµС‚С‹ СЃ РЅРµРѕР¶РёРґР°РЅРЅС‹РјРё РїРѕРІРѕСЂРѕС‚Р°РјРё Рё РїСЃРёС…РѕР»РѕРіРёС‡РµСЃРєРёРј РЅР°РїСЂСЏР¶РµРЅРёРµРј."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 7,
   "fields": {
-    "app_label": "contenttypes",
-    "model": "contenttype"
+    "name": "РњРµР»РѕРґСЂР°РјР°",
+    "slug": "melodrama",
+    "description": "Р РѕРјР°РЅС‚РёС‡РµСЃРєРёРµ РёСЃС‚РѕСЂРёРё Рѕ Р»СЋР±РІРё, С‡СѓРІСЃС‚РІР°С… Рё РѕС‚РЅРѕС€РµРЅРёСЏС…."
   }
 },
 {
-  "model": "contenttypes.contenttype",
+  "model": "reviews.genre",
   "pk": 8,
   "fields": {
-    "app_label": "sessions",
-    "model": "session"
+    "name": "РљСЂРёРјРёРЅР°Р»",
+    "slug": "crime",
+    "description": "Р“Р°РЅРіСЃС‚РµСЂСЃРєРёРµ СЂР°Р·Р±РѕСЂРєРё, РґРµС‚РµРєС‚РёРІРЅС‹Рµ СЂР°СЃСЃР»РµРґРѕРІР°РЅРёСЏ Рё РїСЂРµСЃС‚СѓРїРЅС‹Р№ РјРёСЂ."
+  }
+},
+{
+  "model": "reviews.genre",
+  "pk": 9,
+  "fields": {
+    "name": "РџСЂРёРєР»СЋС‡РµРЅРёСЏ",
+    "slug": "adventure",
+    "description": "РџСѓС‚РµС€РµСЃС‚РІРёСЏ, РїРѕРёСЃРє СЃРѕРєСЂРѕРІРёС‰ Рё РЅРµРІРµСЂРѕСЏС‚РЅС‹Рµ РѕС‚РєСЂС‹С‚РёСЏ."
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 1,
+  "fields": {
+    "movie_title": "Р”Р¶РѕРЅ РќРµРґРµР»СЏ 4",
+    "director": "Р§Р°Рґ РЎС‚Р°С…РµР»СЃРєРё",
+    "release_year": 2023,
+    "text": "В«Р”Р¶РѕРЅ РЈРёРє (РќРµРґРµР»СЏ) 4В» вЂ” СЌС‚Рѕ РЅРµ РїСЂРѕСЃС‚Рѕ Р±РѕРµРІРёРє, Р° РЅР°СЃС‚РѕСЏС‰РµРµ С‚Р°РЅРіРѕ СЃ РїСѓР»СЏРјРё РЅР° 2 С‡Р°СЃР° 49 РјРёРЅСѓС‚. Р§Р°Рґ РЎС‚Р°С…РµР»СЃРєРё Р±РµСЂС‘С‚ РІСЃС‘ Р»СѓС‡С€РµРµ РёР· РїСЂРµРґС‹РґСѓС‰РёС… С‡Р°СЃС‚РµР№ Рё РІРѕР·РІРѕРґРёС‚ СЌС‚Рѕ РІ Р°Р±СЃРѕР»СЋС‚. Р­РєС€РµРЅ Р·РґРµСЃСЊ РїРѕСЃС‚Р°РІР»РµРЅ РЅР°СЃС‚РѕР»СЊРєРѕ РІРёСЂС‚СѓРѕР·РЅРѕ, С‡С‚Рѕ СЃС†РµРЅР° РґСЂР°РєРё РІ РѕСЃР°РєСЃРєРѕРј РѕС‚РµР»Рµ В«РљРѕРЅС‚РёРЅРµРЅС‚Р°Р»СЊВ» РёР»Рё РїРµСЂРµСЃС‚СЂРµР»РєР° СЃРІРµСЂС…Сѓ РІРЅРёР· РІ РџР°СЂРёР¶Рµ СѓР¶Рµ РїСЂРµС‚РµРЅРґСѓСЋС‚ РЅР° РјРµСЃС‚Рѕ РІ СѓС‡РµР±РЅРёРєР°С… РєРёРЅРѕРёСЃРєСѓСЃСЃС‚РІР°.\r\n\r\nРљРёР°РЅСѓ Р РёРІР· РїРѕ-РїСЂРµР¶РЅРµРјСѓ РЅРµРјРЅРѕРіРѕСЃР»РѕРІРµРЅ Рё СЃРјРµСЂС‚РѕРЅРѕСЃРµРЅ, Р° РµРіРѕ РѕРїРїРѕРЅРµРЅС‚С‹ вЂ” РЎРєРѕС‚С‚ Р­РґРєРёРЅСЃ Рё Р‘РёР»Р» РЎРєР°СЂСЃРіР°СЂРґ вЂ” РґРѕР±Р°РІР»СЏСЋС‚ Р±Р»СЋРґСѓ РїРµСЂС†Р°. РћС‚РґРµР»СЊРЅРѕРµ СѓРґРѕРІРѕР»СЊСЃС‚РІРёРµ вЂ” Р”РѕРЅРЅРё Р™РµРЅ РІСЃР»РµРїСѓСЋ, РєРѕС‚РѕСЂС‹Р№ РєСЂР°РґС‘С‚ РєР°Р¶РґС‹Р№ РєР°РґСЂ. Р”Р°, С„РёР»СЊРј РЅРµРјРЅРѕРіРѕ РїРµСЂРµРЅР°СЃС‹С‰РµРЅ, РЅРѕ РєРѕРіРґР° С„РёРЅР°Р» РїРѕРґРІРѕРґРёС‚ С‡РµСЂС‚Сѓ РїРѕРґ РІСЃРµР№ СЃР°РіРѕР№, СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РїРѕРЅСЏС‚РЅРѕ: Р»СѓС‡С€Рµ Р·Р°РєРѕРЅС‡РёС‚СЊ РЅР° СЌС‚РѕР№ СЌРїРёС‡РµСЃРєРѕР№ РЅРѕС‚Рµ СѓР¶Рµ РЅРµР»СЊР·СЏ. РћР±СЏР·Р°С‚РµР»СЊРЅРѕ Рє РїСЂРѕСЃРјРѕС‚СЂСѓ РЅР° Р±РѕР»СЊС€РѕРј СЌРєСЂР°РЅРµ РёР»Рё РІ С…РѕСЂРѕС€РёС… РЅР°СѓС€РЅРёРєР°С….",
+    "rating": 9,
+    "trailer_url": "https://vkvideo.ru/video-182204191_456244111?list=ln-SsZQRcXTJWbGCP9HPv",
+    "is_approved": true,
+    "author": 1,
+    "pub_date": "2026-04-22T19:22:16.357Z",
+    "genre": 1
   }
 }
 ]
