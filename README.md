@@ -38,6 +38,8 @@ source venv/bin/activate      # Linux/Mac
 
 # 3. Установить зависимости
 pip install -r requirements.txt
+# Или с зеркала
+pip install -r requirements.txt -i https://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com --timeout 100
 ```
 
 После запуска сайт доступен по адресу: http://127.0.0.1:8000/

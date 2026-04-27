@@ -34,7 +34,9 @@ python -m venv venv
 source venv/Scripts/activate  # Windows (Git Bash)
 
 # Установить зависимости
-pip install -r ../requirements.txt
+pip install -r requirements.txt
+# Или с зеркала
+pip install -r requirements.txt -i https://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com --timeout 100
 
 # Выполнить миграции
 python manage.py migrate
