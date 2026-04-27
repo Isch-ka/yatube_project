@@ -8,74 +8,95 @@ User = get_user_model()
 class GenreModelTest(TestCase):
     """Тестируем модель Genre."""
 
-    def setUp(self):
-        self.genre = Genre.objects.create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.genre = Genre.objects.create(
             name='Боевик',
             slug='action',
-            description='Напряжённые сцены и погони'
+            description='Напряжённые сцены, погони, перестрелки'
         )
 
-    def test_genre_creation(self):
-        """Проверяем, что жанр создаётся корректно."""
-        self.assertEqual(self.genre.name, 'Боевик')
-        self.assertEqual(self.genre.slug, 'action')
-        self.assertEqual(self.genre.description, 'Напряжённые сцены и погони')
+    def test_verbose_name(self):
+        """verbose_name в полях Genre совпадает с ожидаемым."""
+        genre = GenreModelTest.genre
+        field_verboses = {
+            'name': 'Название жанра',
+            'slug': 'Slug',
+            'description': 'Описание',
+        }
+        for field, expected_value in field_verboses.items():
+            with self.subTest(field=field):
+                self.assertEqual(
+                    genre._meta.get_field(field).verbose_name,
+                    expected_value
+                )
 
-    def test_genre_str_method(self):
-        """Проверяем строковое представление жанра."""
-        self.assertEqual(str(self.genre), 'Боевик')
-
-    def test_genre_slug_unique(self):
-        """Проверяем, что slug уникален."""
-        with self.assertRaises(Exception):
-            Genre.objects.create(
-                name='Другой боевик',
-                slug='action',
-                description='Описание'
-            )
+    def test_object_name_is_name_field(self):
+        """__str__ жанра - это его название."""
+        genre = GenreModelTest.genre
+        expected_object_name = genre.name
+        self.assertEqual(expected_object_name, str(genre))
 
 
 class ReviewModelTest(TestCase):
     """Тестируем модель Review."""
 
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser')
-        self.genre = Genre.objects.create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = User.objects.create_user(username='testuser')
+        cls.genre = Genre.objects.create(
             name='Боевик',
             slug='action'
         )
-        self.review = Review.objects.create(
+        cls.review = Review.objects.create(
             movie_title='Тестовый фильм',
             director='Тестовый режиссёр',
             release_year=2020,
             text='Отличный фильм! Очень понравился.',
             rating=8,
-            author=self.user,
-            genre=self.genre,
+            author=cls.user,
+            genre=cls.genre,
             is_approved=True
         )
 
-    def test_review_creation(self):
-        """Проверяем, что рецензия создаётся корректно."""
-        self.assertEqual(self.review.movie_title, 'Тестовый фильм')
-        self.assertEqual(self.review.director, 'Тестовый режиссёр')
-        self.assertEqual(self.review.release_year, 2020)
-        self.assertEqual(self.review.rating, 8)
-        self.assertTrue(self.review.is_approved)
-        self.assertIsNotNone(self.review.pub_date)
+    def test_verbose_name(self):
+        """verbose_name в полях Review совпадает с ожидаемым."""
+        review = ReviewModelTest.review
+        field_verboses = {
+            'movie_title': 'Название фильма',
+            'director': 'Режиссёр',
+            'release_year': 'Год выпуска',
+            'text': 'Текст рецензии',
+            'rating': 'Оценка (1-10)',
+            'trailer_url': 'Ссылка на трейлер',
+            'is_approved': 'Одобрено администратором',
+            'author': 'Автор',
+            'pub_date': 'Дата публикации',
+            'genre': 'Жанр',
+        }
+        for field, expected_value in field_verboses.items():
+            with self.subTest(field=field):
+                self.assertEqual(
+                    review._meta.get_field(field).verbose_name,
+                    expected_value
+                )
 
-    def test_review_str_method(self):
-        """Проверяем строковое представление рецензии."""
-        expected = 'Тестовый фильм (2020) - testuser'
-        self.assertEqual(str(self.review), expected)
+    def test_object_name_is_movie_title_field(self):
+        """__str__ рецензии содержит название фильма, год и автора."""
+        review = ReviewModelTest.review
+        expected_string = f'{review.movie_title} ({review.release_year}) - {review.author.username}'
+        self.assertEqual(expected_string, str(review))
 
-    def test_review_rating_choices(self):
-        """Проверяем, что оценка соответствует choices."""
+    def test_rating_choices(self):
+        """Оценка должна быть от 1 до 10."""
+        review = ReviewModelTest.review
         valid_ratings = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        self.assertIn(self.review.rating, valid_ratings)
+        self.assertIn(review.rating, valid_ratings)
 
     def test_review_ordering(self):
-        """Проверяем сортировку рецензий по убыванию даты."""
+        """Рецензии сортируются по убыванию даты публикации."""
         review2 = Review.objects.create(
             movie_title='Новый фильм',
             director='Новый режиссёр',

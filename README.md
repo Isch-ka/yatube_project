@@ -56,9 +56,41 @@ pip install -r requirements.txt
 ## Запуск тестов
 
 ```bash
-python manage.py test                    # Все тесты
-python manage.py test reviews            # Тесты приложения reviews
-python manage.py test -v 2               # Подробный вывод
+# Все тесты
+python manage.py test
+
+# Тесты приложения reviews
+python manage.py test reviews
+
+# Подробный вывод
+python manage.py test -v 2
+
+# Конкретный тестовый файл
+python manage.py test reviews.tests.test_models
+python manage.py test reviews.tests.test_forms
+python manage.py test reviews.tests.test_views
+python manage.py test reviews.tests.test_search
+```
+
+## Coverage
+
+Coverage — это инструмент, показывающий, какой процент кода покрыт тестами. Он помогает понять, какие части проекта проверены, а какие нет.
+
+```bash
+# Установка coverage
+pip install coverage
+
+# Запуск с покрытием
+coverage run --source='reviews,users,core,about' manage.py test -v 2
+
+# Отчёт в консоли
+coverage report
+
+# HTML-отчёт
+coverage html
+
+# Открыть отчёт в браузере (Windows)
+start htmlcov/index.html
 ```
 
 ## Структура проекта

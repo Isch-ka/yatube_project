@@ -153,19 +153,44 @@ def year(request):
 ## Тестирование
 
 ```bash
-# Запуск всех тестов
+# Все тесты
 python manage.py test
 
-# Запуск тестов приложения reviews
+# Только тесты приложения reviews
 python manage.py test reviews
 
-# Запуск с подробным выводом
+# Подробный вывод
 python manage.py test -v 2
 
-# Запуск конкретного тестового файла
+# Конкретный тестовый файл
 python manage.py test reviews.tests.test_models
 python manage.py test reviews.tests.test_forms
 python manage.py test reviews.tests.test_views
+python manage.py test reviews.tests.test_search
+```
+
+## Coverage
+
+Coverage (покрытие) — это инструмент, показывающий, какой процент кода покрыт тестами. Он помогает понять, какие части проекта проверены, а какие нет.
+Без coverage: тесты просто проходят/падают.
+С coverage: ты видишь, какие строки кода вообще не проверяются.
+Нужно, чтобы убедиться, что тесты проверяют весь код, а не только его часть. Хороший показатель — 80-100%.
+
+```bash
+# Установка coverage
+pip install coverage
+
+# Запуск с покрытием (с замером покрытия)
+coverage run --source='reviews,users,core,about' manage.py test -v 2
+
+# Отчёт в консоли
+coverage report
+
+# HTML-отчёт
+coverage html
+
+# Открыть отчёт в браузере (Windows)
+start htmlcov/index.html
 ```
 
 ## Лицензия

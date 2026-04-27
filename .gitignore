@@ -1,7 +1,12 @@
-# Dev/yatube_project/.gitignore
+# Dev/kinomir_project/.gitignore
 
 .vscode/
 venv/
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+*.cover
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
