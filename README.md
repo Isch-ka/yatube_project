@@ -13,7 +13,7 @@
 ```bash
 # 1. Клонировать репозиторий
 git clone <url-репозитория>
-cd kinomir_project/kinomir
+cd kinomir_project/
 
 # 2. Запустить скрипт развёртывания
 # Windows (Git Bash):
@@ -29,7 +29,7 @@ cd kinomir_project/kinomir
 ```bash
 # 1. Клонировать репозиторий
 git clone <url-репозитория>
-cd kinomir_project/kinomir
+cd kinomir_project/
 
 # 2. Создать и активировать виртуальное окружение
 python -m venv venv

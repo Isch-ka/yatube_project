@@ -25,13 +25,32 @@
 ## Быстрый старт
 
 ```bash
+# 1. Клонировать репозиторий
+git clone <url-репозитория>
+cd kinomir_project/
+
+# 2. Запустить скрипт развёртывания
+# Windows (Git Bash):
+./run_windows.sh
+# Linux/Mac:
+./run_linux.sh
+```
+
+Важно! Чтобы сделать файл sh исполняемым:
+
+```chmod +x run_linux.sh``` / ```chmod +x run_windows.sh```
+
+## Ручной старт
+
+```bash
 # Клонировать репозиторий
 git clone <url>
-cd kinomir_project/kinomir
+cd kinomir_project/
 
 # Создать и активировать виртуальное окружение
 python -m venv venv
 source venv/Scripts/activate  # Windows (Git Bash)
+source venv/bin/activate      # Linux/Mac
 
 # Установить зависимости
 pip install -r requirements.txt
