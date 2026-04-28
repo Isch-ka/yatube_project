@@ -19,25 +19,18 @@ if [ ! -d "venv" ]; then
     echo "Загрузка тестовых данных..."
     python manage.py loaddata fixtures/kinomir_data.json
     
-    echo "Создание суперпользователя..."
+    echo "Создание суперпользователя:"
     python manage.py createsuperuser
     
     echo "Запуск тестов..."
     python manage.py test
     
     cd ..
-else
-    echo "Активация существующего окружения..."
-    source venv/Scripts/activate
 fi
 
-# Переход в папку проекта
+# Активация окружения и переход в проект
+source venv/Scripts/activate
 cd kinomir
 
-# Запуск сервера
-echo "Запуск сервера..."
-echo "Остановить сервер: Ctrl+C"
-python manage.py runserver
-
-# Запускаем новую оболочку, которая унаследует окружение
-exec $SHELL
+# Запуск новой оболочки с окружением
+exec bash
