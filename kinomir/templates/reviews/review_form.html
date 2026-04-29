@@ -19,7 +19,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="
+                    <form method="post" enctype="multipart/form-data" action="
                         {% if is_edit %}
                             {% url 'reviews:review_edit' review_id %}
                         {% else %}

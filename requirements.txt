@@ -3,3 +3,5 @@ pytz==2025.2
 sqlparse==0.5.5
 django-debug-toolbar==3.2.4
 coverage==7.4.0
+pillow
+sorl-thumbnail

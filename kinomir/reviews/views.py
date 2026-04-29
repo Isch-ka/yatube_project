@@ -128,7 +128,7 @@ def genre_search(request):
 @login_required
 def review_create(request):
     """Страница создания новой рецензии"""
-    form = ReviewForm(request.POST or None)
+    form = ReviewForm(request.POST or None, request.FILES or None)
     
     if request.method == 'POST' and form.is_valid():
         review = form.save(commit=False)
@@ -149,7 +149,7 @@ def review_edit(request, review_id):
     if review.author != request.user and not request.user.is_staff:
         return redirect('reviews:profile', username=request.user.username)
     
-    form = ReviewForm(request.POST or None, instance=review)
+    form = ReviewForm(request.POST or None, request.FILES or None, instance=review)
     
     if request.method == 'POST' and form.is_valid():
         form.save()

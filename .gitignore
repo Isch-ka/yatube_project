@@ -7,6 +7,10 @@ htmlcov/
 .coverage
 .coverage.*
 *.cover
+media/
+sent_emails/
+*.pyc
+db.sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Страница не найдена{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 p-5">
+    <div class="card bg-dark border-secondary">
+      <div class="card-header bg-danger text-white">404</div>
+      <div class="card-body text-white-50">
+        <p>Страницы с адресом <strong>{{ path }}</strong> не существует</p>
+        <a href="{% url 'reviews:index' %}" class="btn btn-danger">Вернуться на главную</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

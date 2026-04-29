@@ -32,6 +32,7 @@ class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews', verbose_name='Автор')
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True, blank=True, related_name='reviews', verbose_name='Жанр')
+    image = models.ImageField('Постер фильма', upload_to='reviews/', blank=True, null=True)
 
     def __str__(self):
         return f'{self.movie_title} ({self.release_year}) - {self.author.username}'

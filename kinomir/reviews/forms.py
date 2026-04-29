@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Review, Genre  # Было: from .models import Post
+from .models import Review, Genre
 
 
 def validate_trailer_url(value):
@@ -13,11 +13,11 @@ def validate_trailer_url(value):
             )
 
 
-class ReviewForm(forms.ModelForm):  # Было: PostForm
+class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Review  # Было: model = Post
+        model = Review
         fields = ('movie_title', 'director', 'release_year', 'genre', 
-                  'text', 'rating', 'trailer_url')
+                  'text', 'rating', 'trailer_url', 'image')
         widgets = {
             'movie_title': forms.TextInput(attrs={'class': 'form-control'}),
             'director': forms.TextInput(attrs={'class': 'form-control'}),

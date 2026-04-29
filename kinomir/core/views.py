@@ -1,3 +1,11 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def page_not_found(request, exception):
+    """Страница 404"""
+    return render(request, 'core/404.html', {'path': request.path}, status=404)
+
+
+def csrf_failure(request, reason=''):
+    """Страница 403 CSRF"""
+    return render(request, 'core/403csrf.html', status=403)

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Ошибка CSRF{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 p-5">
+    <div class="card bg-dark border-secondary">
+      <div class="card-header bg-danger text-white">403</div>
+      <div class="card-body text-white-50">
+        <p>Ошибка проверки CSRF. Пожалуйста, обновите страницу и попробуйте снова.</p>
+        <a href="{% url 'reviews:index' %}" class="btn btn-danger">На главную</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
