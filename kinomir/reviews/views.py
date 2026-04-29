@@ -135,7 +135,6 @@ def review_create(request):
         review.author = request.user
         review.is_approved = request.user.is_staff  # True для админа, False для обычных
         review.save()
-        print(f"✅ Рецензия создана: {review.movie_title}, is_approved={review.is_approved}")
         return redirect('reviews:profile', username=request.user.username)
     
     context = {'form': form, 'is_edit': False}

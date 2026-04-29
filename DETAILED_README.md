@@ -193,6 +193,8 @@ python manage.py test reviews.tests.test_models
 python manage.py test reviews.tests.test_forms
 python manage.py test reviews.tests.test_views
 python manage.py test reviews.tests.test_search
+python manage.py test reviews.tests.test_paginator
+python manage.py test reviews.tests.test_urls
 ```
 
 ## Coverage

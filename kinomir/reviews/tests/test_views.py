@@ -6,85 +6,89 @@ from reviews.models import Review, Genre
 User = get_user_model()
 
 
-class StaticURLTests(TestCase):
-    """Тестируем доступность страниц."""
-
-    def setUp(self):
-        self.guest_client = Client()
-
-    def test_homepage(self):
-        """Главная страница доступна."""
-        response = self.guest_client.get('/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_genres_list_page(self):
-        """Страница списка жанров доступна."""
-        response = self.guest_client.get(reverse('reviews:genres_list'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_about_author_page(self):
-        """Страница об авторе доступна."""
-        response = self.guest_client.get('/about/author/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_about_tech_page(self):
-        """Страница о технологиях доступна."""
-        response = self.guest_client.get('/about/tech/')
-        self.assertEqual(response.status_code, 200)
-
-
 class ReviewViewsTest(TestCase):
-    """Тестируем view-функции с данными."""
+    """Тестируем view-функции: шаблоны и контекст."""
 
-    def setUp(self):
-        self.client = Client()
-        self.user = User.objects.create_user(username='testuser')
-        self.genre = Genre.objects.create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = User.objects.create_user(username='testuser')
+        cls.genre = Genre.objects.create(
             name='Боевик',
-            slug='action'
+            slug='action',
+            description='Напряжённые сцены'
         )
-        self.review = Review.objects.create(
+        cls.review = Review.objects.create(
             movie_title='Тестовый фильм',
             director='Тестовый режиссёр',
             release_year=2020,
-            text='Отличный фильм!',
+            text='Отличный фильм! Очень понравился.',
             rating=8,
-            author=self.user,
-            genre=self.genre,
+            author=cls.user,
+            genre=cls.genre,
             is_approved=True
         )
 
-    def test_genre_page_accessible(self):
-        """Страница жанра доступна."""
-        response = self.client.get(
-            reverse('reviews:genre_list', args=[self.genre.slug])
-        )
-        self.assertEqual(response.status_code, 200)
+    def setUp(self):
+        self.authorized_client = Client()
+        self.authorized_client.force_login(self.user)
 
-    def test_profile_page_accessible(self):
-        """Страница профайла пользователя доступна."""
-        response = self.client.get(
+    # ========== ТЕСТЫ ШАБЛОНОВ ==========
+
+    def test_pages_uses_correct_template(self):
+        """Проверяем, что страницы используют правильные шаблоны."""
+        templates_pages_names = {
+            'reviews/index.html': reverse('reviews:index'),
+            'reviews/genres_list.html': reverse('reviews:genres_list'),
+            'reviews/profile.html': reverse('reviews:profile', args=[self.user.username]),
+            'reviews/review_detail.html': reverse('reviews:review_detail', args=[self.review.id]),
+            'reviews/review_form.html': reverse('reviews:review_create'),
+            'reviews/genre_list.html': reverse('reviews:genre_list', args=[self.genre.slug]),
+        }
+        for template, reverse_name in templates_pages_names.items():
+            with self.subTest(reverse_name=reverse_name):
+                response = self.authorized_client.get(reverse_name)
+                self.assertTemplateUsed(response, template)
+
+    # ========== ТЕСТЫ КОНТЕКСТА ==========
+
+    def test_genre_list_page_show_correct_context(self):
+        """Страница списка жанров передаёт правильный контекст."""
+        response = self.authorized_client.get(reverse('reviews:genres_list'))
+        self.assertIn('page_obj', response.context)
+        self.assertIn('total_genres', response.context)
+
+    def test_profile_page_show_correct_context(self):
+        """Страница профайла передаёт правильный контекст."""
+        response = self.authorized_client.get(
             reverse('reviews:profile', args=[self.user.username])
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['author'], self.user)
+        self.assertIn('page_obj', response.context)
+        self.assertIn('total_reviews', response.context)
 
-    def test_review_detail_page_accessible(self):
-        """Страница отдельной рецензии доступна."""
-        response = self.client.get(
+    def test_review_detail_page_show_correct_context(self):
+        """Страница рецензии передаёт правильный контекст."""
+        response = self.authorized_client.get(
             reverse('reviews:review_detail', args=[self.review.id])
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['review'], self.review)
+        self.assertEqual(response.context['total_reviews'], 1)
 
-    def test_create_review_redirects_unauthorized(self):
-        """Неавторизованный перенаправляется на страницу входа."""
-        response = self.client.get(reverse('reviews:review_create'))
-        self.assertRedirects(response, '/auth/login/?next=/create/')
+    def test_genre_reviews_page_show_correct_context(self):
+        """Страница рецензий по жанру передаёт правильный контекст."""
+        response = self.authorized_client.get(
+            reverse('reviews:genre_list', args=[self.genre.slug])
+        )
+        self.assertEqual(response.context['genre'], self.genre)
+        self.assertIn('page_obj', response.context)
 
-    def test_create_review_authorized(self):
-        """Авторизованный может создать рецензию."""
-        self.client.force_login(self.user)
-        response = self.client.get(reverse('reviews:review_create'))
-        self.assertEqual(response.status_code, 200)
+    def test_home_page_contains_reviews(self):
+        """Главная страница содержит список рецензий."""
+        response = self.authorized_client.get(reverse('reviews:index'))
+        self.assertIn('page_obj', response.context)
+
+    # ========== ТЕСТЫ ОТОБРАЖЕНИЯ ==========
 
     def test_non_approved_review_not_shown(self):
         """Неодобренные рецензии не показываются на главной."""
@@ -98,5 +102,5 @@ class ReviewViewsTest(TestCase):
             genre=self.genre,
             is_approved=False
         )
-        response = self.client.get(reverse('reviews:index'))
+        response = self.authorized_client.get(reverse('reviews:index'))
         self.assertNotContains(response, 'Скрытый фильм')
